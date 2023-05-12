@@ -13,7 +13,7 @@ class BookFactory extends Factory
     public function definition(): array
     {
         return [
-            'isbn'        => $this->faker->word(),
+            'isbn'        => $this->faker->unique()->text(),
             'name'        => $this->faker->name(),
             'authors'     => $this->faker->words(),
             'translators' => $this->faker->words(),
@@ -25,6 +25,7 @@ class BookFactory extends Factory
             'maximumTime' => 3600*24*7,
             'created_at'  => Carbon::now(),
             'updated_at'  => Carbon::now(),
+            'deleted_at'  => null,
         ];
     }
 }

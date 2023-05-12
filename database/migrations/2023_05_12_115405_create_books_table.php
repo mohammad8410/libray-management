@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->integer('price');
             $table->integer('number');
             $table->timestamp('maximumTime');
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

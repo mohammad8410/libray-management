@@ -1,9 +1,11 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
+use App\Actions\Book\BookIndexAction;
 use App\Http\Requests\BookIndexRequest;
-use BookIndexAction;
+use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BookController extends Controller

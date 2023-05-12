@@ -11,7 +11,7 @@ class BookIndexTest extends TestCase
     public function test_book_index_structure()
     {
         $user = User::factory()->create();
-        $books= Book::factory(20)->create();
+        $books= Book::factory(15)->create();
 
         $response = $this->get(route('book.index'));
 

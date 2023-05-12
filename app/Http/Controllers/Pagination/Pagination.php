@@ -1,6 +1,6 @@
 <?php
 
-namespace App\dto\Api\v1\Pagination;
+namespace App\Http\Controllers\Pagination;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use RuntimeException;
