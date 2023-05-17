@@ -4,10 +4,12 @@ namespace Feature\Book;
 
 use App\Models\Book;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class BookIndexTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_book_index_structure()
     {
         $expectedCount = config('pagination.default_page_size');
