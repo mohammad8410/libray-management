@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 
 use App\Actions\Book\BookCreateAction;
 use App\Actions\Book\BookIndexAction;
+use App\Actions\Book\BookUpdateAction;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -22,6 +24,13 @@ class BookController extends Controller
         $this->authorize('store',Book::class);
 
         return $bookCreateAction->handle($request);
+    }
+
+    public function update(BookUpdateRequest $request, Book $book, BookUpdateAction $bookUpdateAction)
+    {
+        $this->authorize('update',Book::class);
+
+        return $bookUpdateAction->handle($request, $book);
     }
 
 }

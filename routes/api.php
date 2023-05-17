@@ -27,6 +27,10 @@ Route::post('/books',[BookController::class,'store'])
     ->middleware('auth')
     ->name('book.store');
 
+Route::put('/books/{book}',[BookController::class,'update'])
+    ->middleware('auth')
+    ->name('book.update');
+
 
 
 
