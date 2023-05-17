@@ -20,9 +20,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::get('/books',[BookController::class,'index'])
-    ->middleware('guest')
+    ->middleware('auth')
     ->name('book.index');
 
+Route::post('/books',[BookController::class,'store'])
+    ->middleware('auth')
+    ->name('book.store');
 
 
 

@@ -15,6 +15,19 @@ class Book extends Model
         'translators' => 'array',
     ];
 
+    protected $fillable = [
+        'isbn',
+        'name',
+        'maximumTime',
+        'year',
+        'authors',
+        'translators',
+        'volume',
+        'pages',
+        'price',
+        'number',
+    ];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
