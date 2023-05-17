@@ -5,11 +5,11 @@ namespace App\Actions\Book;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Responses\BookResponse;
 use App\Models\Book;
-use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class BookCreateAction
 {
-    public function handle(BookCreateRequest $request): Response
+    public function handle(BookCreateRequest $request): JsonResponse
     {
         $book = Book::create([
             'isbn'        => $request->get('isbn'),
@@ -24,7 +24,7 @@ class BookCreateAction
             'volume'      => $request->get('volume'),
         ]);
 
-        return response(new BookResponse($book),201);
+        return new JsonResponse(new BookResponse($book),201);
     }
 
 }

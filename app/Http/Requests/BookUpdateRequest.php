@@ -9,15 +9,15 @@ class BookUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-              "isbn" => 'string',
-              "maximumTime" => 'integer',
-              "name" => 'string',
-              "authors" => 'array',
-              "translators" => 'array',
-              "year" => 'integer',
-              "volume" => 'integer',
-              "pages" => 'integer',
-              "price" => 'integer',
+            "isbn"        => 'string|unique:books',
+            "maximumTime" => 'integer',
+            "name"        => 'string',
+            "authors"     => 'array',
+            "translators" => 'array|nullable',
+            "year"        => 'integer',
+            "volume"      => 'integer',
+            "pages"       => 'integer',
+            "price"       => 'integer',
         ];
     }
 }

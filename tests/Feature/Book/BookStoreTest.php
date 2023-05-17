@@ -110,4 +110,36 @@ class BookStoreTest extends TestCase
             'message' => 'unauthenticated user.',
         ]);
     }
+
+    public function test_isbn_duplication()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('store a book');
+        $book = Book::factory()->create();
+        $ISBN = $book->isbn;
+        //dd($ISBN);
+        $response = $this->actingAs($user)->postJson(route('book.store',
+            [
+                'isbn'        => $ISBN,
+                'name'        => 'efghs',
+                'maximumTime' => 80000,
+                'authors'     => [
+                    'moz',
+                    'boz',
+                    'toz',
+                ],
+                'translators' => [
+                    'goz',
+                    'soz',
+                ],
+                'year'        => 2000,
+                'volume'      => 1,
+                'pages'       => 200,
+                'price'       => 100,
+                'number'      => 2,
+            ]
+        ));
+
+        $response->assertUnprocessable();
+    }
 }

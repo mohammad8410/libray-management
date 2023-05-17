@@ -9,11 +9,11 @@ class BookCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "isbn"        => 'string',
+            "isbn"        => 'string|unique:books',
             "maximumTime" => 'integer',
             "name"        => 'string',
             "authors"     => 'array',
-            "translators" => 'array',
+            "translators" => 'array|nullable',
             "year"        => 'integer',
             "volume"      => 'integer',
             "pages"       => 'integer',
