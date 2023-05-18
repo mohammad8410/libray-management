@@ -27,6 +27,7 @@ class BookDeleteTest extends TestCase
         $response = $this->actingAs($user)->delete(route('book.delete',['book' => 1]));
 
         $response->assertOk();
+        $this->assertSoftDeleted($book);
         $response->assertJsonStructure(
             [
                 'id',
