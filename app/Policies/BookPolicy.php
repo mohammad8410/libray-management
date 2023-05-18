@@ -10,6 +10,10 @@ class BookPolicy
 {
     use HandlesAuthorization;
 
+    public function index(User $user)
+    {
+        return $user->can('view any book');
+    }
     public function store(User $user): bool
     {
         return $user->can('store a book');
@@ -19,4 +23,11 @@ class BookPolicy
     {
         return $user->can('update a book');
     }
+
+    public function show(User $user): bool
+    {
+        return $user->can('view any book');
+    }
+
+
 }

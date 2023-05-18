@@ -31,6 +31,10 @@ Route::put('/books/{book}',[BookController::class,'update'])
     ->middleware('auth')
     ->name('book.update');
 
+Route::get('/books/{book}',[BookController::class,'show'])
+    ->middleware('auth')
+    ->name('book.show');
+
 
 
 

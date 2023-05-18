@@ -17,13 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        Permission::create(['name' => 'view any book']);
         Permission::create(['name' => 'store a book']);
         Permission::create(['name' => 'update a book']);
 
         $role1 = Role::create(['name' => 'super-admin']);
-        $role1->syncPermissions(['store a book','update a book']);
+        $role1->syncPermissions(['view any book','store a book','update a book']);
 
         $role2 = Role::create(['name' => 'user']);
-        $role2->syncPermissions([]);
+        $role2->syncPermissions(['view any book']);
     }
 }
