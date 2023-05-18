@@ -21,10 +21,13 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'store a book']);
         Permission::create(['name' => 'update a book']);
         Permission::create(['name' => 'delete a book']);
+        Permission::create(['name' => 'increase book count']);
+        Permission::create(['name' => 'decrease book count']);
+
 
         $role1 = Role::create(['name' => 'super-admin']);
-        $role1->syncPermissions(['view any book','store a book','update a book','delete a book']);
-
+        $role1->syncPermissions(['view any book','store a book','update a book','delete a book'
+            ,'increase book count','decrease book count']);
         $role2 = Role::create(['name' => 'user']);
         $role2->syncPermissions(['view any book']);
     }

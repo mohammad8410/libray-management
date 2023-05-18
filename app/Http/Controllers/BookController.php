@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Book\BookCreateAction;
 use App\Actions\Book\BookDeleteAction;
+use App\Actions\Book\BookIncreaseAction;
 use App\Actions\Book\BookIndexAction;
 use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
@@ -49,6 +50,13 @@ class BookController extends Controller
         $this->authorize('delete', Book::class);
 
         return $bookDeleteAction->handle($book);
+    }
+
+    public function increase(Book $book, int $incCount, BookIncreaseAction $bookIncreaseAction)
+    {
+        $this->authorize('increase',Book::class);
+
+        return $bookIncreaseAction->handle($book,$incCount);
     }
 
 }

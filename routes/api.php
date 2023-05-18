@@ -39,6 +39,10 @@ Route::delete('/book/{book}',[BookController::class,'delete'])
     ->middleware('auth')
     ->name('book.delete');
 
+Route::post('/book/{book}/inc/{incCount}',[BookController::class,'increase'])
+    ->middleware('auth')
+    ->name('book.increase');
+
 
 
 

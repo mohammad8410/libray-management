@@ -34,4 +34,9 @@ class BookPolicy
         return $user->can('delete a book');
     }
 
+    public function increase(User $user): bool
+    {
+        return $user->can('increase book count');
+    }
+
 }
