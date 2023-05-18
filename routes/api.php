@@ -43,6 +43,10 @@ Route::post('/book/{book}/inc/{incCount}',[BookController::class,'increase'])
     ->middleware('auth')
     ->name('book.increase');
 
+Route::post('/book/{book}/dec/{decCount}',[BookController::class,'decrease'])
+    ->middleware('auth')
+    ->name('book.decrease');
+
 
 
 

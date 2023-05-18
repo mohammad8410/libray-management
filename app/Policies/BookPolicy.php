@@ -39,4 +39,9 @@ class BookPolicy
         return $user->can('increase book count');
     }
 
+    public function decrease(User $user): bool
+    {
+        return $user->can('decrease book count');
+    }
+
 }
