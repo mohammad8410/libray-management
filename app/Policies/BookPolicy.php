@@ -44,4 +44,9 @@ class BookPolicy
         return $user->can('decrease book count');
     }
 
+    public function borrow(User $user): bool
+    {
+        return $user->can('borrow a book');
+    }
+
 }

@@ -47,7 +47,9 @@ Route::post('/book/{book}/dec/{decCount}',[BookController::class,'decrease'])
     ->middleware('auth')
     ->name('book.decrease');
 
-
+Route::post('/books/{book}/borrow',[BookController::class,'borrow'])
+    ->middleware('auth')
+    ->name('book.borrow');
 
 
 

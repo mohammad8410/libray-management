@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
+use Spatie\Permission\PermissionServiceProvider;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,12 +24,14 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'delete a book']);
         Permission::create(['name' => 'increase book count']);
         Permission::create(['name' => 'decrease book count']);
+        Permission::create(['name' => 'borrow a book']);
+        Permission::create(['name' => 'return a book']);
 
 
         $role1 = Role::create(['name' => 'super-admin']);
         $role1->syncPermissions(['view any book','store a book','update a book','delete a book'
-            ,'increase book count','decrease book count']);
+            ,'increase book count','decrease book count','borrow a book','return a book']);
         $role2 = Role::create(['name' => 'user']);
-        $role2->syncPermissions(['view any book']);
+        $role2->syncPermissions(['view any book','borrow a book','return a book']);
     }
 }

@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Book\BookBorrowAction;
 use App\Actions\Book\BookCreateAction;
 use App\Actions\Book\BookDecreaseAction;
 use App\Actions\Book\BookDeleteAction;
@@ -65,6 +66,13 @@ class BookController extends Controller
         $this->authorize('decrease',Book::class);
 
         return $bookDecreaseAction->handle($book,$decCount);
+    }
+
+    public function borrow(Book $book, BookBorrowAction $bookBorrowAction)
+    {
+        $this->authorize('borrow',Book::class);
+
+        return $bookBorrowAction->handle($book);
     }
 
 }
