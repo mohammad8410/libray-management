@@ -35,6 +35,10 @@ Route::get('/books/{book}',[BookController::class,'show'])
     ->middleware('auth')
     ->name('book.show');
 
+Route::delete('/book/{book}',[BookController::class,'delete'])
+    ->middleware('auth')
+    ->name('book.delete');
+
 
 
 

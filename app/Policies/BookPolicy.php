@@ -29,5 +29,9 @@ class BookPolicy
         return $user->can('view any book');
     }
 
+    public function delete(User $user): bool
+    {
+        return $user->can('delete a book');
+    }
 
 }

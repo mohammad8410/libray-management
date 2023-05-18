@@ -710,6 +710,11 @@ components:
           type: integer
           format: timestamp
           nullable: false
+        deleted_at:
+          description: book record soft deletion time
+          type: integer
+          format: timestamp
+          nullable: true
     CreateBookRequestBody:
       type: object
       properties:

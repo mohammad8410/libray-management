@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Book\BookCreateAction;
+use App\Actions\Book\BookDeleteAction;
 use App\Actions\Book\BookIndexAction;
 use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
@@ -41,6 +42,13 @@ class BookController extends Controller
         $this->authorize('show', Book::class);
 
         return $bookShowAction->handle($book);
+    }
+
+    public function delete(Book $book, BookDeleteAction $bookDeleteAction)
+    {
+        $this->authorize('delete', Book::class);
+
+        return $bookDeleteAction->handle($book);
     }
 
 }
