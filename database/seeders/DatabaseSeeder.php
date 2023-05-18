@@ -28,10 +28,14 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'return a book']);
 
 
+        Permission::create(['name' => 'view any user']);
+        Permission::create(['name' => 'view own info']);
+
         $role1 = Role::create(['name' => 'super-admin']);
         $role1->syncPermissions(['view any book','store a book','update a book','delete a book'
-            ,'increase book count','decrease book count','borrow a book','return a book']);
+            ,'increase book count','decrease book count','borrow a book','return a book'
+            ,'view own info','view any user']);
         $role2 = Role::create(['name' => 'user']);
-        $role2->syncPermissions(['view any book','borrow a book','return a book']);
+        $role2->syncPermissions(['view any book','borrow a book','return a book','view own info']);
     }
 }

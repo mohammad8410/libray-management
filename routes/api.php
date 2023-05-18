@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,5 +55,12 @@ Route::post('/books/{book}/borrow',[BookController::class,'borrow'])
 Route::post('/books/{book}/return',[BookController::class,'returning'])
     ->middleware('auth')
     ->name('book.return');
+
+
+Route::get('/users',[UserController::class,'index'])
+    ->middleware('auth')
+    ->name('user.index');
+
+
 
 
