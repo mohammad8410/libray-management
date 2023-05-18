@@ -6,6 +6,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -52,6 +53,14 @@ class Handler extends ExceptionHandler
                 return response()->json([
                     "message" => "unauthorized access."
                 ], 403);
+            }
+        });
+
+        $this->renderable(function (NotAcceptableHttpException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    "message" => "Not Acceptable."
+                ],406);
             }
         });
     }
