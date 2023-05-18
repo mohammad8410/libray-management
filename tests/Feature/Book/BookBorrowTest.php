@@ -73,7 +73,7 @@ class BookBorrowTest extends TestCase
     public function test_unauthenticated_user_can_not_borrow_a_book()
     {
         $response = $this->post(route('book.borrow',[
-            'book' => 1
+            'book' => 1,
         ]));
 
         $this->assertGuest();
@@ -111,5 +111,4 @@ class BookBorrowTest extends TestCase
             'message' => 'unauthorized access.',
         ]);
     }
-
 }
