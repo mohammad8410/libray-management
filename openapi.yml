@@ -74,6 +74,8 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+        422:
+          $ref: "#/components/responses/ValidationError"
 
   /books/{id}:
     get:

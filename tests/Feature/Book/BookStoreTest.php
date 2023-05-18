@@ -111,13 +111,13 @@ class BookStoreTest extends TestCase
         ]);
     }
 
-    public function test_isbn_duplication()
+    public function test_isbn_duplication_should_be_unprocessable()
     {
         $user = User::factory()->create();
         $user->givePermissionTo('store a book');
         $book = Book::factory()->create();
         $ISBN = $book->isbn;
-        //dd($ISBN);
+
         $response = $this->actingAs($user)->postJson(route('book.store',
             [
                 'isbn'        => $ISBN,
