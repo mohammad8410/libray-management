@@ -49,4 +49,9 @@ class BookPolicy
         return $user->can('borrow a book');
     }
 
+    public function returning(User $user): bool
+    {
+        return $user->can('return a book');
+    }
+
 }

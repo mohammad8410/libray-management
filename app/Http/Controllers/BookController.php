@@ -9,6 +9,7 @@ use App\Actions\Book\BookDecreaseAction;
 use App\Actions\Book\BookDeleteAction;
 use App\Actions\Book\BookIncreaseAction;
 use App\Actions\Book\BookIndexAction;
+use App\Actions\Book\BookReturnAction;
 use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
 use App\Http\Requests\BookCreateRequest;
@@ -75,4 +76,10 @@ class BookController extends Controller
         return $bookBorrowAction->handle($book);
     }
 
+    public function returning(Book $book, BookReturnAction $bookReturnAction)
+    {
+        $this->authorize('returning',Book::class);
+
+        return $bookReturnAction->handle($book);
+    }
 }

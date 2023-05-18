@@ -51,6 +51,8 @@ Route::post('/books/{book}/borrow',[BookController::class,'borrow'])
     ->middleware('auth')
     ->name('book.borrow');
 
-
+Route::post('/books/{book}/return',[BookController::class,'returning'])
+    ->middleware('auth')
+    ->name('book.return');
 
 
