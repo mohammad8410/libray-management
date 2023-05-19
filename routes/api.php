@@ -61,6 +61,8 @@ Route::get('/users',[UserController::class,'index'])
     ->middleware('auth')
     ->name('user.index');
 
-
+Route::put('/users',[UserController::class,'update'])
+    ->middleware('auth')
+    ->name('user.update');
 
 

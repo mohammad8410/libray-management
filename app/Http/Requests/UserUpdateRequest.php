@@ -4,12 +4,12 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserIndexRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'id' => 'integer',
+            'name' => 'string|required',
         ];
     }
 }

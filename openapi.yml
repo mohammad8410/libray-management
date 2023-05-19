@@ -388,49 +388,29 @@ paths:
       description: list of users(only for admins)
       parameters:
         - in: query
-          name: per_page
-          description: show items based on per_page
+          name: id
           required: false
-          schema:
-            type: integer
-            nullable: false
-        - in: query
-          name: page
-          required: false
-          description: page number
           schema:
             type: integer
             nullable: false
       responses:
         200:
-          description: list of users
+          description: info of user
           content:
             application/json:
               schema:
-                allOf:
-                  - $ref: "#/components/schemas/Pagination"
-                    properties:
-                      data:
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/UserResponse"
+                  $ref: "#/components/schemas/UserResponse"
         401:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+        404:
+          $ref: "#/components/responses/NotFound"
 
-  /users/{id}:
     put:
       tags:
         - User
       description: update user information
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: integer
-            nullable: false
       requestBody:
           $ref: "#/components/requestBodies/UserUpdateRequestBodyJson"
       responses:
@@ -444,29 +424,16 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
-        404:
-          $ref: "#/components/responses/NotFound"
-        422:
-          $ref: "#/components/responses/ValidationError"
 
     delete:
       tags:
         - User
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: integer
-            nullable: false
       responses:
         204:
           description: user deleted successfully.
         401:
           $ref: "#/components/responses/Unauthenticated"
         403:
-          $ref: "#/components/responses/Unauthorized"
-        404:
           $ref: "#/components/responses/Unauthorized"
 
   /userscore:

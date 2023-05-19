@@ -12,8 +12,8 @@ class UserResponse extends \Spatie\LaravelData\Data
 
     public function __construct(User $user)
     {
-        $this->id = $user->id;
-        $this->name = $user->name;
+        $this->id    = $user->id;
+        $this->name  = $user->name;
         $this->email = $user->email;
     }
 

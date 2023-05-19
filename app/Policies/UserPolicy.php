@@ -13,4 +13,9 @@ class UserPolicy
     {
         return $user->can('view any user');
     }
+
+    public function update(User $user): bool
+    {
+        return $user->can('update own info');
+    }
 }
