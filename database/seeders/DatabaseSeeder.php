@@ -35,16 +35,16 @@ class DatabaseSeeder extends Seeder
 
 
         Permission::create(['name' => 'view any score']);
-
+        Permission::create(['name' => 'view own score']);
 
 
 
         $role1 = Role::create(['name' => 'super-admin']);
         $role1->syncPermissions(['view any book','store a book','update a book','delete a book'
             ,'increase book count','decrease book count','borrow a book','return a book'
-            ,'view own info','view any user','update own info','view any score']);
+            ,'view own info','view any user','update own info','view any score','view own score']);
         $role2 = Role::create(['name' => 'user']);
         $role2->syncPermissions(['view any book','borrow a book','return a book','view own info'
-            ,'update own info','delete own account']);
+            ,'update own info','delete own account','view own score']);
     }
 }

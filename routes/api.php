@@ -76,4 +76,6 @@ Route::get('/user-scores',[UserScoreController::class,'index'])
     ->middleware('auth')
     ->name('user-scores.index');
 
-
+Route::get('/user-scores/{userScore}',[UserScoreController::class,'show'])
+    ->middleware('auth')
+    ->name('user-score.show');

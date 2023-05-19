@@ -478,11 +478,11 @@ paths:
         403:
           $ref: "#/components/responses/Unauthorized"
 
-  /user-scores/{id}:
+  /user-scores/{userScore}:
     get:
       tags:
         - UserScore
-      description: update user score(only for admin)
+      description: show user score
       parameters:
         - in: query
           name: id
