@@ -18,4 +18,9 @@ class UserPolicy
     {
         return $user->can('update own info');
     }
+
+    public function delete(User $user): bool
+    {
+        return $user->can('delete own account');
+    }
 }

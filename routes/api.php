@@ -65,4 +65,8 @@ Route::put('/users',[UserController::class,'update'])
     ->middleware('auth')
     ->name('user.update');
 
+Route::delete('/users',[UserController::class,'delete'])
+    ->middleware('auth')
+    ->name('user.delete');
+
 

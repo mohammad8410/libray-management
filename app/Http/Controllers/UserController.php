@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\User\UserDeleteAction;
 use App\Actions\User\UserIndexAction;
 use App\Actions\User\UserUpdateAction;
 use App\Http\Requests\UserIndexRequest;
@@ -23,5 +24,12 @@ class UserController extends Controller
         $this->authorize('update', User::class);
 
         return $userUpdateAction->handle($request);
+    }
+
+    public function delete(UserDeleteAction $userDeleteAction)
+    {
+        $this->authorize('delete', User::class);
+
+        return $userDeleteAction->handle();
     }
 }

@@ -502,6 +502,8 @@ paths:
           schema:
             type: integer
             nullable: false
+      requestBody:
+        $ref: "#/components/requestBodies/UpdateUserScoreRequestBodyJson"
       responses:
         200:
           description: user score updated successfully.
@@ -682,6 +684,12 @@ components:
           type: integer
           format: timestamp
           nullable: true
+    UpdateUserScoreRequestBody:
+      type: object
+      properties:
+        newScore:
+          type: integer
+          nullable: false
     CreateBookRequestBody:
       type: object
       properties:
@@ -871,6 +879,11 @@ components:
           schema:
             $ref: "#/components/schemas/Message"
   requestBodies:
+    UpdateUserScoreRequestBodyJson:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UpdateUserScoreRequestBody"
     CreateBookRequestBodyJson:
       content:
         application/json:

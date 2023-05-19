@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'view any user']);
         Permission::create(['name' => 'view own info']);
         Permission::create(['name' => 'update own info']);
-
+        Permission::create(['name' => 'delete own account']);
 
 
 
@@ -41,6 +41,6 @@ class DatabaseSeeder extends Seeder
             ,'view own info','view any user','update own info']);
         $role2 = Role::create(['name' => 'user']);
         $role2->syncPermissions(['view any book','borrow a book','return a book','view own info'
-            ,'update own info']);
+            ,'update own info','delete own account']);
     }
 }
