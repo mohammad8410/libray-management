@@ -21,4 +21,9 @@ class UserScorePolicy
            || ($user->can('view own score')
             && $user->id == $userScore->user_id);
     }
+
+    public function update(User $user): bool
+    {
+        return $user->can('update user score');
+    }
 }

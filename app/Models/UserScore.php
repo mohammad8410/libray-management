@@ -11,6 +11,10 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 class UserScore extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'score',
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
