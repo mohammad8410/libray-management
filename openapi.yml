@@ -436,7 +436,7 @@ paths:
         403:
           $ref: "#/components/responses/Unauthorized"
 
-  /userscore:
+  /user-scores:
     get:
       tags:
         - UserScore
@@ -447,6 +447,18 @@ paths:
           required: false
           schema:
             type: boolean
+            nullable: true
+        - in: query
+          name: per_page
+          required: false
+          schema:
+            type: integer
+            nullable: false
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: integer
             nullable: false
       responses:
         200:
@@ -466,7 +478,7 @@ paths:
         403:
           $ref: "#/components/responses/Unauthorized"
 
-  /userscore/{id}:
+  /user-scores/{id}:
     get:
       tags:
         - UserScore
@@ -495,6 +507,7 @@ paths:
     put:
       tags:
         - UserScore
+      description: update user score(only for admins)
       parameters:
         - in: query
           name: id

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserScoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -68,5 +69,11 @@ Route::put('/users',[UserController::class,'update'])
 Route::delete('/users',[UserController::class,'delete'])
     ->middleware('auth')
     ->name('user.delete');
+
+
+
+Route::get('/user-scores',[UserScoreController::class,'index'])
+    ->middleware('auth')
+    ->name('user-scores.index');
 
 
