@@ -29,31 +29,31 @@ Route::post('/books',[BookController::class,'store'])
     ->middleware('auth')
     ->name('book.store');
 
-Route::put('/books/{book}',[BookController::class,'update'])
+Route::put('/books/{id}',[BookController::class,'update'])
     ->middleware('auth')
     ->name('book.update');
 
-Route::get('/books/{book}',[BookController::class,'show'])
+Route::get('/books/{id}',[BookController::class,'show'])
     ->middleware('auth')
     ->name('book.show');
 
-Route::delete('/book/{book}',[BookController::class,'delete'])
+Route::delete('/books/{id}',[BookController::class,'delete'])
     ->middleware('auth')
     ->name('book.delete');
 
-Route::post('/book/{book}/inc/{incCount}',[BookController::class,'increase'])
+Route::post('/books/{id}/inc/{incCount}',[BookController::class,'increase'])
     ->middleware('auth')
     ->name('book.increase');
 
-Route::post('/book/{book}/dec/{decCount}',[BookController::class,'decrease'])
+Route::post('/books/{id}/dec/{decCount}',[BookController::class,'decrease'])
     ->middleware('auth')
     ->name('book.decrease');
 
-Route::post('/books/{book}/borrow',[BookController::class,'borrow'])
+Route::post('/books/{id}/borrow',[BookController::class,'borrow'])
     ->middleware('auth')
     ->name('book.borrow');
 
-Route::post('/books/{book}/return',[BookController::class,'returning'])
+Route::post('/books/{id}/return',[BookController::class,'returning'])
     ->middleware('auth')
     ->name('book.return');
 
