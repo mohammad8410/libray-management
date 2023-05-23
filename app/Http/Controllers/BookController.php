@@ -16,7 +16,6 @@ use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {

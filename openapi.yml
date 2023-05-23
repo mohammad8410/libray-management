@@ -531,53 +531,53 @@ paths:
         404:
           $ref: "#/components/responses/NotFound"
 
-  /userscore/{id}/inc:
-    post:
-      tags:
-        - UserScore
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: integer
-            nullable: false
-      responses:
-        200:
-          description: user score increased successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserScoreResponse"
-        403:
-          $ref: "#/components/responses/Unauthorized"
-        404:
-          $ref: "#/components/responses/NotFound"
-
-  /userscore/{id}/dec:
-    post:
-      tags:
-        - UserScore
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: integer
-            nullable: false
-      responses:
-        200:
-          description: user score decreased successfully.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserScoreResponse"
-        403:
-          $ref: "#/components/responses/Unauthorized"
-        404:
-          $ref: "#/components/responses/NotFound"
-        406:
-          $ref: "#/components/responses/NotAcceptable"
+#  /userscore/{id}/inc:
+#    post:
+#      tags:
+#        - UserScore
+#      parameters:
+#        - in: query
+#          name: id
+#          required: true
+#          schema:
+#            type: integer
+#            nullable: false
+#      responses:
+#        200:
+#          description: user score increased successfully.
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/UserScoreResponse"
+#        403:
+#          $ref: "#/components/responses/Unauthorized"
+#        404:
+#          $ref: "#/components/responses/NotFound"
+#
+#  /userscore/{id}/dec:
+#    post:
+#      tags:
+#        - UserScore
+#      parameters:
+#        - in: query
+#          name: id
+#          required: true
+#          schema:
+#            type: integer
+#            nullable: false
+#      responses:
+#        200:
+#          description: user score decreased successfully.
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/UserScoreResponse"
+#        403:
+#          $ref: "#/components/responses/Unauthorized"
+#        404:
+#          $ref: "#/components/responses/NotFound"
+#        406:
+#          $ref: "#/components/responses/NotAcceptable"
 
 
 

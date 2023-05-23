@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
         $this->renderable(function (NotAcceptableHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json([
-                    "message" => "Not Acceptable."
+                    "message" => "not acceptable."
                 ],406);
             }
         });

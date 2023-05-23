@@ -66,7 +66,7 @@ class BookReturnTest extends TestCase
 
         $response->assertStatus(406);
         $response->assertJson([
-            'message' => 'Not Acceptable.',
+            'message' => 'not acceptable.',
         ]);
     }
 

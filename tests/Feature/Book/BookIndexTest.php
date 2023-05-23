@@ -10,10 +10,18 @@ use Tests\TestCase;
 class BookIndexTest extends TestCase
 {
     use RefreshDatabase;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed();
+    }
+
     public function test_book_index_structure()
     {
         $expectedCount = config('pagination.default_page_size');
         $user = User::factory()->create();
+        $user->givePermissionTo('view any book');
         Book::factory($expectedCount+1)->create();
 
         $response = $this->actingAs($user)->get(route('book.index'));
@@ -75,6 +83,7 @@ class BookIndexTest extends TestCase
     public function test_search_parameter()
     {
         $user = User::factory()->create();
+        $user->givePermissionTo('view any book');
         $book = Book::factory(2)->create();
 
         $response = $this->actingAs($user)->get(route('book.index',[

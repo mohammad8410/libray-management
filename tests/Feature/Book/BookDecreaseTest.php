@@ -101,4 +101,23 @@ class BookDecreaseTest extends TestCase
             'message' => 'resource not found.',
         ]);
     }
+
+    public function test_not_acceptable_count_decrease()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('decrease book count');
+        $book = Book::factory()->create([
+            'number' => 1
+        ]);
+
+        $response = $this->actingAs($user)->post(route('book.decrease',[
+            'book' => 1,
+            'decCount' => 2,
+        ]));
+
+        $response->assertStatus(406);
+        $response->assertJson([
+            'message' => 'not acceptable.',
+        ]);
+    }
 }
