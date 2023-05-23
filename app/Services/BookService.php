@@ -6,7 +6,9 @@ use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Responses\BookResponse;
 use App\Models\Book;
+use App\Models\BookUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class BookService
@@ -92,6 +94,22 @@ class BookService
         throw new NotAcceptableHttpException();
     }
 
+    public function borrow(Book $book)
+    {
+        $borrowedBookCount = BookUser::query()->where('book_id','=',$book->id)->count();
+        $existedBookCount  = $book->number - $borrowedBookCount;
+
+        if($existedBookCount > 0)
+        {
+            BookUser::create([
+                'user_id' => Auth::user()->id,
+                'book_id' => $book->id,
+            ]);
+            return $book;
+        }
+
+        throw new NotAcceptableHttpException();
+    }
 
 
 }
