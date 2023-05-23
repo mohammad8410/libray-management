@@ -4,9 +4,10 @@ namespace App\Services;
 
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
+use App\Http\Responses\BookResponse;
 use App\Models\Book;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Collection;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class BookService
 {
@@ -78,6 +79,17 @@ class BookService
         $book->increment('number',$incCount);
 
         return $book;
+    }
+
+    public function decrease(Book $book, int $decCount)
+    {
+        if ($decCount < $book->number)
+        {
+            $book->decrement('number',$decCount);
+
+            return $book;
+        }
+        throw new NotAcceptableHttpException();
     }
 
 
