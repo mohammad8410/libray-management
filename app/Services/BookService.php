@@ -2,34 +2,29 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\BookIndexRequestDto;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
-use App\Http\Responses\BookResponse;
 use App\Models\Book;
 use App\Models\BookUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class BookService
 {
-    public function index(Request $request): LengthAwarePaginator
+    public function index(BookIndexRequestDto $dto): LengthAwarePaginator
     {
-        $bookQuery  = Book::query();
-        $queryParam = $request->get('search');
+        $bookQuery = Book::query();
 
-        if ($queryParam !== null) {
-            $bookQuery->where('isbn', '=', $queryParam)
-                ->orWhere('name', '=', $queryParam)
-                ->orWhere('authors', '=', $queryParam)
-                ->orWhere('translators', '=', $queryParam);
+        if ($dto->search !== null) {
+            $bookQuery->where('isbn', '=', $dto->search)
+                ->orWhere('name', '=', $dto->search)
+                ->orWhere('authors', '=', $dto->search)
+                ->orWhere('translators', '=', $dto->search);
         }
 
-        $per_page  = $request->get('per_page', config('pagination.default_page_size', 15));
-        $page      = $request->get('page', config('pagination.default_page', 1));
-
-        return $bookQuery->paginate(perPage: $per_page, page: $page);
+        return $bookQuery->paginate(perPage: $dto->perPage, page: $dto->page);
     }
 
     public function store(BookCreateRequest $request): Book
@@ -77,18 +72,17 @@ class BookService
         return $book;
     }
 
-    public function increase(Book $book, int $incCount): Book
+    public function increaseStock(Book $book, int $incCount): Book
     {
-        $book->increment('number',$incCount);
+        $book->increment('number', $incCount);
 
         return $book;
     }
 
-    public function decrease(Book $book, int $decCount): Book
+    public function decreaseStock(Book $book, int $decCount): Book
     {
-        if ($decCount < $book->number)
-        {
-            $book->decrement('number',$decCount);
+        if ($decCount < $book->number) {
+            $book->decrement('number', $decCount);
 
             return $book;
         }
@@ -97,11 +91,10 @@ class BookService
 
     public function borrow(Book $book): Book
     {
-        $borrowedBookCount = BookUser::query()->where('book_id','=',$book->id)->count();
+        $borrowedBookCount = BookUser::query()->where('book_id', '=', $book->id)->count();
         $existedBookCount  = $book->number - $borrowedBookCount;
 
-        if($existedBookCount > 0)
-        {
+        if ($existedBookCount > 0) {
             BookUser::create([
                 'user_id' => Auth::user()->id,
                 'book_id' => $book->id,
@@ -114,12 +107,11 @@ class BookService
 
     public function returning(Book $book): Book
     {
-        $borrowQuery     = BookUser::query()->where('user_id','=',Auth::user()->id)
-                                            ->where('book_id','=',$book->id);
-        $userHasTheBook  = $borrowQuery->exists();
+        $borrowQuery    = BookUser::query()->where('user_id', '=', Auth::user()->id)
+            ->where('book_id', '=', $book->id);
+        $userHasTheBook = $borrowQuery->exists();
 
-        if ($userHasTheBook)
-        {
+        if ($userHasTheBook) {
             $borrowQuery->delete();
             return $book;
         }

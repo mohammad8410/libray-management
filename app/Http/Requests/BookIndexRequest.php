@@ -9,9 +9,9 @@ class BookIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search'   => 'string',
-            'per_page' => 'integer',
-            'page'     => 'integer',
+            'search'  => 'string|nullable',
+            'perPage' => 'integer',
+            'page'    => 'integer',
         ];
     }
 }

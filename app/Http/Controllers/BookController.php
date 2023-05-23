@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Actions\Book\BookBorrowAction;
 use App\Actions\Book\BookCreateAction;
 use App\Actions\Book\BookDecreaseAction;
@@ -17,6 +18,7 @@ use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Services\BookService;
+use App\DataTransferObjects\BookIndexRequestDto;
 
 class BookController extends Controller
 {
@@ -31,7 +33,7 @@ class BookController extends Controller
     {
         $this->authorize('index', Book::class);
 
-        $response = $this->bookService->index($request);
+        $response = $this->bookService->index(BookIndexRequestDto::fromRequest($request));
 
         return $bookIndexAction->handle($response);
     }
@@ -76,7 +78,7 @@ class BookController extends Controller
     {
         $this->authorize('increase',Book::class);
 
-        $response = $this->bookService->increase($book,$incCount);
+        $response = $this->bookService->increaseStock($book,$incCount);
 
         return $bookIncreaseAction->handle($response);
     }
@@ -85,7 +87,7 @@ class BookController extends Controller
     {
         $this->authorize('decrease',Book::class);
 
-        $response = $this->bookService->decrease($book,$decCount);
+        $response = $this->bookService->decreaseStock($book,$decCount);
 
         return $bookDecreaseAction->handle($response);
     }
