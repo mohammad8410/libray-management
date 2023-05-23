@@ -111,5 +111,19 @@ class BookService
         throw new NotAcceptableHttpException();
     }
 
+    public function returning(Book $book)
+    {
+        $borrowQuery     = BookUser::query()->where('user_id','=',Auth::user()->id)
+                                            ->where('book_id','=',$book->id);
+        $userHasTheBook  = $borrowQuery->exists();
+
+        if ($userHasTheBook)
+        {
+            $borrowQuery->delete();
+            return $book;
+        }
+        throw new NotAcceptableHttpException();
+    }
+
 
 }
