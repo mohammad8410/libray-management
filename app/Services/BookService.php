@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Requests\BookCreateRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Collection;
@@ -25,5 +26,26 @@ class BookService
 
         return $bookQuery->paginate(perPage: $per_page, page: $page);
     }
+
+    public function store(BookCreateRequest $request)
+    {
+        return Book::create([
+            'isbn'        => $request->get('isbn'),
+            'name'        => $request->get('name'),
+            'maximumTime' => $request->get('maximumTime'),
+            'authors'     => $request->get('authors'),
+            'translators' => $request->get('translators'),
+            'year'        => $request->get('year'),
+            'number'      => $request->get('number'),
+            'pages'       => $request->get('pages'),
+            'price'       => $request->get('price'),
+            'volume'      => $request->get('volume'),
+        ]);
+    }
+
+
+
+
+
 
 }
