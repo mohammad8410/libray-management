@@ -58,11 +58,11 @@ class BookController extends Controller
         return $bookUpdateAction->handle($response);
     }
 
-    public function show(Book $book, BookShowAction $bookShowAction)
+    public function show(int $id, BookShowAction $bookShowAction)
     {
         $this->authorize('show', Book::class);
 
-        $response = $this->bookService->show($book);
+        $response = $this->bookService->show($id);
 
         return $bookShowAction->handle($response);
     }

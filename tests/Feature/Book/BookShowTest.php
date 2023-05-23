@@ -25,7 +25,7 @@ class BookShowTest extends TestCase
         Book::factory()->create();
 
         $response = $this->actingAs($user)->get(route('book.show',[
-            'book' => 1
+            'id' => 1
         ]));
 
         $response->assertOk();
@@ -52,8 +52,11 @@ class BookShowTest extends TestCase
     public function test_resource_not_found_for_show()
     {
         $user = User::factory()->create();
+        $user->givePermissionTo('view any book');
 
-        $response = $this->actingAs($user)->get(route('book.show',['book' => 1]));
+        $response = $this->actingAs($user)->get(route('book.show',[
+            'id' => 1
+        ]));
 
         $response->assertNotFound();
         $response->assertJson([
@@ -65,7 +68,9 @@ class BookShowTest extends TestCase
     {
         Book::factory()->create();
 
-        $response = $this->get(route('book.show',['book' => 1]));
+        $response = $this->get(route('book.show',[
+            'id' => 1
+        ]));
 
         $this->assertGuest();
         $response->assertJson([
