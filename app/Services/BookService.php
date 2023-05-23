@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\BookCreateRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Collection;
@@ -43,7 +44,22 @@ class BookService
         ]);
     }
 
+    public function update(BookUpdateRequest $request, Book $book)
+    {
+        $book->update([
+            'isbn'        => $request->get('isbn'),
+            'name'        => $request->get('name'),
+            'year'        => $request->get('year'),
+            'pages'       => $request->get('pages'),
+            'price'       => $request->get('price'),
+            'maximumTime' => $request->get('maximumTime'),
+            'authors'     => $request->get('authors'),
+            'translators' => $request->get('translators'),
+            'volume'      => $request->get('volume'),
+        ]);
 
+        return $book;
+    }
 
 
 
