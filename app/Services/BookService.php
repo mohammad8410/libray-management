@@ -66,6 +66,13 @@ class BookService
         return $book;
     }
 
+    public function delete(Book $book)
+    {
+        $book->delete();
+
+        return $book;
+    }
+
 
 
 }
