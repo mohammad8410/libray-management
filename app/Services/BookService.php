@@ -61,6 +61,10 @@ class BookService
         return $book;
     }
 
+    public function show(Book $book)
+    {
+        return $book;
+    }
 
 
 
