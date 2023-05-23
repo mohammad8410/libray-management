@@ -14,12 +14,12 @@ class BookIndexRequestDto
     {
     }
 
-    public static function fromRequest(BookIndexRequest $bookIndexRequest): BookIndexRequestDto
+    public static function fromRequest(BookIndexRequest $request): BookIndexRequestDto
     {
         return new self(
-            $bookIndexRequest->validated('search'),
-            $bookIndexRequest->validated('perPage',config('pagination.default_page_size',15)),
-            $bookIndexRequest->validated('page',config('pagination.default_page',1)),
+            $request->validated('search'),
+            $request->validated('perPage',config('pagination.default_page_size',15)),
+            $request->validated('page',config('pagination.default_page',1)),
         );
     }
 

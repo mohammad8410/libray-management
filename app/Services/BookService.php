@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
+use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookIndexRequestDto;
-use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\BookUser;
@@ -27,19 +27,19 @@ class BookService
         return $bookQuery->paginate(perPage: $dto->perPage, page: $dto->page);
     }
 
-    public function store(BookCreateRequest $request): Book
+    public function store(BookCreateRequestDto $request): Book
     {
         return Book::create([
-            'isbn'        => $request->get('isbn'),
-            'name'        => $request->get('name'),
-            'maximumTime' => $request->get('maximumTime'),
-            'authors'     => $request->get('authors'),
-            'translators' => $request->get('translators'),
-            'year'        => $request->get('year'),
-            'number'      => $request->get('number'),
-            'pages'       => $request->get('pages'),
-            'price'       => $request->get('price'),
-            'volume'      => $request->get('volume'),
+            'isbn'        => $request->isbn,
+            'name'        => $request->name,
+            'maximumTime' => $request->maximumTime,
+            'authors'     => $request->authors,
+            'translators' => $request->translators,
+            'year'        => $request->year,
+            'number'      => $request->number,
+            'pages'       => $request->pages,
+            'price'       => $request->price,
+            'volume'      => $request->volume,
         ]);
     }
 

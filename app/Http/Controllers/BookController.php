@@ -13,6 +13,7 @@ use App\Actions\Book\BookIndexAction;
 use App\Actions\Book\BookReturnAction;
 use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
+use App\DataTransferObjects\BookCreateRequestDto;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
@@ -42,7 +43,7 @@ class BookController extends Controller
     {
         $this->authorize('store',Book::class);
 
-        $response = $this->bookService->store($request);
+        $response = $this->bookService->store(BookCreateRequestDto::fromRequest($request));
 
         return $bookCreateAction->handle($response);
     }
