@@ -53,4 +53,34 @@ class UserScoreUpdateTest extends TestCase
             'message' => 'unauthorized access.',
         ]);
     }
+
+    public function test_unauthenticated_user_can_not_update_score()
+    {
+        $response = $this->put(route('user-score.update',[
+            'userScore' => 1,
+        ]),[
+            'newScore' => 1,
+        ]);
+
+        $this->assertGuest();
+        $response->assertJson([
+            'message' => 'unauthenticated user.',
+        ]);
+    }
+
+    public function test_resource_not_found_for_score_update()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('update user score');
+        $response = $this->actingAs($user)->put(route('user-score.update',[
+            'userScore' => 10,
+        ]),[
+            'newScore' => 1,
+        ]);
+
+        $response->assertNotFound();
+        $response->assertJson([
+            'message' => 'resource not found.',
+        ]);
+    }
 }
