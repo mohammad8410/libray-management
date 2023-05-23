@@ -4,12 +4,14 @@ namespace App\Services;
 
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookIndexRequestDto;
+use App\DataTransferObjects\BookUpdateRequestDto;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\BookUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookService
 {
@@ -43,26 +45,37 @@ class BookService
         ]);
     }
 
-    public function update(BookUpdateRequest $request, Book $book): Book
+    public function update(BookUpdateRequestDto $request, int $id): Book
     {
-        $book->update([
-            'isbn'        => $request->get('isbn'),
-            'name'        => $request->get('name'),
-            'year'        => $request->get('year'),
-            'pages'       => $request->get('pages'),
-            'price'       => $request->get('price'),
-            'maximumTime' => $request->get('maximumTime'),
-            'authors'     => $request->get('authors'),
-            'translators' => $request->get('translators'),
-            'volume'      => $request->get('volume'),
-        ]);
+        $book = Book::query()->find($id);
+        if ($book !== null)
+        {
+            $book->update([
+                'isbn'        => $request->isbn,
+                'name'        => $request->name,
+                'year'        => $request->year,
+                'pages'       => $request->pages,
+                'price'       => $request->price,
+                'maximumTime' => $request->maximumTime,
+                'authors'     => $request->authors,
+                'translators' => $request->translators,
+                'volume'      => $request->volume,
+            ]);
 
-        return $book;
+            return $book;
+        }
+
+        throw new NotFoundHttpException();
     }
 
-    public function show(Book $book): Book
+    public function show(int $id): Book
     {
-        return $book;
+        $book = Book::query()->find($id);
+        if ($book !== null) {
+            return $book;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     public function delete(Book $book): Book

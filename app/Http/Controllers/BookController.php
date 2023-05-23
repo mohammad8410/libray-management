@@ -14,6 +14,7 @@ use App\Actions\Book\BookReturnAction;
 use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
 use App\DataTransferObjects\BookCreateRequestDto;
+use App\DataTransferObjects\BookUpdateRequestDto;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
@@ -48,11 +49,11 @@ class BookController extends Controller
         return $bookCreateAction->handle($response);
     }
 
-    public function update(BookUpdateRequest $request, Book $book, BookUpdateAction $bookUpdateAction)
+    public function update(BookUpdateRequest $request, int $id, BookUpdateAction $bookUpdateAction)
     {
         $this->authorize('update',Book::class);
 
-        $response = $this->bookService->update($request,$book);
+        $response = $this->bookService->update(BookUpdateRequestDto::fromRequest($request),$id);
 
         return $bookUpdateAction->handle($response);
     }
