@@ -73,6 +73,13 @@ class BookService
         return $book;
     }
 
+    public function increase(Book $book, int $incCount)
+    {
+        $book->increment('number',$incCount);
+
+        return $book;
+    }
+
 
 
 }
