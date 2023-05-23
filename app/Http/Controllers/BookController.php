@@ -16,69 +16,95 @@ use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
+use App\Services\BookService;
 
 class BookController extends Controller
 {
+    protected BookService $bookService;
+
+    public function __construct()
+    {
+        $this->bookService = new BookService();
+    }
+
     public function index(BookIndexRequest $request, BookIndexAction $bookIndexAction)
     {
         $this->authorize('index', Book::class);
 
-        return $bookIndexAction->handle($request);
+        $response = $this->bookService->index($request);
+
+        return $bookIndexAction->handle($response);
     }
 
     public function store(BookCreateRequest $request, BookCreateAction $bookCreateAction)
     {
         $this->authorize('store',Book::class);
 
-        return $bookCreateAction->handle($request);
+        $response = $this->bookService->store($request);
+
+        return $bookCreateAction->handle($response);
     }
 
     public function update(BookUpdateRequest $request, Book $book, BookUpdateAction $bookUpdateAction)
     {
         $this->authorize('update',Book::class);
 
-        return $bookUpdateAction->handle($request, $book);
+        $response = $this->bookService->update($request,$book);
+
+        return $bookUpdateAction->handle($response);
     }
 
     public function show(Book $book, BookShowAction $bookShowAction)
     {
         $this->authorize('show', Book::class);
 
-        return $bookShowAction->handle($book);
+        $response = $this->bookService->show($book);
+
+        return $bookShowAction->handle($response);
     }
 
     public function delete(Book $book, BookDeleteAction $bookDeleteAction)
     {
         $this->authorize('delete', Book::class);
 
-        return $bookDeleteAction->handle($book);
+        $response = $this->bookService->delete($book);
+
+        return $bookDeleteAction->handle($response);
     }
 
     public function increase(Book $book, int $incCount, BookIncreaseAction $bookIncreaseAction)
     {
         $this->authorize('increase',Book::class);
 
-        return $bookIncreaseAction->handle($book,$incCount);
+        $response = $this->bookService->increase($book,$incCount);
+
+        return $bookIncreaseAction->handle($response);
     }
 
     public function decrease(Book $book, int $decCount, BookDecreaseAction $bookDecreaseAction)
     {
         $this->authorize('decrease',Book::class);
 
-        return $bookDecreaseAction->handle($book,$decCount);
+        $response = $this->bookService->decrease($book,$decCount);
+
+        return $bookDecreaseAction->handle($response);
     }
 
     public function borrow(Book $book, BookBorrowAction $bookBorrowAction)
     {
         $this->authorize('borrow',Book::class);
 
-        return $bookBorrowAction->handle($book);
+        $response = $this->bookService->borrow($book);
+
+        return $bookBorrowAction->handle($response);
     }
 
     public function returning(Book $book, BookReturnAction $bookReturnAction)
     {
         $this->authorize('returning',Book::class);
 
-        return $bookReturnAction->handle($book);
+        $response = $this->bookService->returning($book);
+
+        return $bookReturnAction->handle($response);
     }
 }

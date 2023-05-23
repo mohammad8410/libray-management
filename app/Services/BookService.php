@@ -7,13 +7,14 @@ use App\Http\Requests\BookUpdateRequest;
 use App\Http\Responses\BookResponse;
 use App\Models\Book;
 use App\Models\BookUser;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 
 class BookService
 {
-    public function index(Request $request)
+    public function index(Request $request): LengthAwarePaginator
     {
         $bookQuery  = Book::query();
         $queryParam = $request->get('search');
@@ -31,7 +32,7 @@ class BookService
         return $bookQuery->paginate(perPage: $per_page, page: $page);
     }
 
-    public function store(BookCreateRequest $request)
+    public function store(BookCreateRequest $request): Book
     {
         return Book::create([
             'isbn'        => $request->get('isbn'),
@@ -47,7 +48,7 @@ class BookService
         ]);
     }
 
-    public function update(BookUpdateRequest $request, Book $book)
+    public function update(BookUpdateRequest $request, Book $book): Book
     {
         $book->update([
             'isbn'        => $request->get('isbn'),
@@ -64,26 +65,26 @@ class BookService
         return $book;
     }
 
-    public function show(Book $book)
+    public function show(Book $book): Book
     {
         return $book;
     }
 
-    public function delete(Book $book)
+    public function delete(Book $book): Book
     {
         $book->delete();
 
         return $book;
     }
 
-    public function increase(Book $book, int $incCount)
+    public function increase(Book $book, int $incCount): Book
     {
         $book->increment('number',$incCount);
 
         return $book;
     }
 
-    public function decrease(Book $book, int $decCount)
+    public function decrease(Book $book, int $decCount): Book
     {
         if ($decCount < $book->number)
         {
@@ -94,7 +95,7 @@ class BookService
         throw new NotAcceptableHttpException();
     }
 
-    public function borrow(Book $book)
+    public function borrow(Book $book): Book
     {
         $borrowedBookCount = BookUser::query()->where('book_id','=',$book->id)->count();
         $existedBookCount  = $book->number - $borrowedBookCount;
@@ -111,7 +112,7 @@ class BookService
         throw new NotAcceptableHttpException();
     }
 
-    public function returning(Book $book)
+    public function returning(Book $book): Book
     {
         $borrowQuery     = BookUser::query()->where('user_id','=',Auth::user()->id)
                                             ->where('book_id','=',$book->id);
