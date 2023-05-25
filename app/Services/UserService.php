@@ -21,7 +21,7 @@ class UserService
         throw new NotFoundException();
     }
 
-    public function update(UserUpdateRequestDto $dto)
+    public function update(UserUpdateRequestDto $dto): User
     {
         $user = User::query()->find($dto->id);
         if($user !== null)
@@ -30,6 +30,18 @@ class UserService
                 'name' => $dto->name,
             ]);
 
+            return $user;
+        }
+
+        throw new NotFoundException();
+    }
+
+    public function delete(int $id): User
+    {
+        $user = User::query()->find($id);
+        if ($user !== null)
+        {
+            $user->delete();
             return $user;
         }
 

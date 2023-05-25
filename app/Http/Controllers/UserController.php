@@ -59,6 +59,15 @@ class UserController extends Controller
     {
         $this->authorize('delete', User::class);
 
-        return $userDeleteAction->handle();
+        try
+        {
+            $response = $this->userService->delete(Auth::user()->id);
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $userDeleteAction->handle($response);
     }
 }
