@@ -100,7 +100,7 @@ class BookService
             return $book;
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundException();
     }
 
     public function decreaseStock(int $id, int $decCount): Book

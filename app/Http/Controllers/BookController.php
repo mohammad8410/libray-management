@@ -103,7 +103,14 @@ class BookController extends Controller
     {
         $this->authorize('increase',Book::class);
 
-        $response = $this->bookService->increaseStock($id,$incCount);
+        try
+        {
+            $response = $this->bookService->increaseStock($id,$incCount);
+        }
+        catch (NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
 
         return $bookIncreaseAction->handle($response);
     }
