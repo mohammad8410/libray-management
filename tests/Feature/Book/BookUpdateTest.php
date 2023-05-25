@@ -24,9 +24,8 @@ class BookUpdateTest extends TestCase
         Book::factory()->create();
         $expectedISBN = \Str::random(10);
 
-        $response = $this->actingAs($user)->put(route('book.update',
-            [
-                'book' => 1,
+        $response = $this->actingAs($user)->put(route('book.update', [
+                'id' => 1,
             ]),
             [
                 'isbn'        => $expectedISBN,
@@ -60,9 +59,8 @@ class BookUpdateTest extends TestCase
         Book::factory()->create();
         $expectedISBN = \Str::random(10);
 
-        $response = $this->actingAs($user)->put(route('book.update',
-            [
-                'book' => 1,
+        $response = $this->actingAs($user)->put(route('book.update', [
+                'id' => 1,
             ]),
             [
                 'isbn'        => $expectedISBN,
@@ -96,7 +94,7 @@ class BookUpdateTest extends TestCase
 
         $response = $this->put(route('book.update',
             [
-                'book' => 1,
+                'id' => 1,
             ]),
             [
                 'isbn'        => $expectedISBN,
@@ -129,7 +127,9 @@ class BookUpdateTest extends TestCase
         $user->givePermissionTo('update a book');
         $expectedISBN = \Str::random(10);
 
-        $response = $this->actingAs($user)->put(route('book.update',['book' => 1]),
+        $response = $this->actingAs($user)->put(route('book.update',[
+            'id' => 1,
+        ]),
             [
                 'isbn'        => $expectedISBN,
                 'name'        => 'asdfg',

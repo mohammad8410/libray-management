@@ -15,12 +15,14 @@ use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookUpdateRequestDto;
+use App\Exceptions\NotFoundException;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Services\BookService;
 use App\DataTransferObjects\BookIndexRequestDto;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookController extends Controller
 {
@@ -53,7 +55,14 @@ class BookController extends Controller
     {
         $this->authorize('update',Book::class);
 
-        $response = $this->bookService->update(BookUpdateRequestDto::fromRequest($request),$id);
+        try
+        {
+            $response = $this->bookService->update(BookUpdateRequestDto::fromRequest($request),$id);
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
 
         return $bookUpdateAction->handle($response);
     }

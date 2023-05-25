@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookIndexRequestDto;
 use App\DataTransferObjects\BookUpdateRequestDto;
+use App\Exceptions\NotFoundException;
 use App\Models\Book;
 use App\Models\BookUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -64,7 +65,7 @@ class BookService
             return $book;
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundException();
     }
 
     public function show(int $id): Book
