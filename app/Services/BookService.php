@@ -5,7 +5,6 @@ namespace App\Services;
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookIndexRequestDto;
 use App\DataTransferObjects\BookUpdateRequestDto;
-use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\BookUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
