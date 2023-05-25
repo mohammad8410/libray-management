@@ -26,7 +26,7 @@ class BookBorrowTest extends TestCase
         $book = Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.borrow',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertOk();
@@ -61,7 +61,7 @@ class BookBorrowTest extends TestCase
         BookUser::factory()->withUser($user1)->withBook($book)->create();
 
         $response = $this->actingAs($user2)->post(route('book.borrow',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertStatus(406);
@@ -73,7 +73,7 @@ class BookBorrowTest extends TestCase
     public function test_unauthenticated_user_can_not_borrow_a_book()
     {
         $response = $this->post(route('book.borrow',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $this->assertGuest();
@@ -88,7 +88,7 @@ class BookBorrowTest extends TestCase
         $user->givePermissionTo('borrow a book');
 
         $response = $this->actingAs($user)->post(route('book.borrow',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertNotFound();
@@ -103,7 +103,7 @@ class BookBorrowTest extends TestCase
         Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.borrow',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertForbidden();

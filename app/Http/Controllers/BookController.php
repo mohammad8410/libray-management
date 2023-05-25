@@ -94,11 +94,11 @@ class BookController extends Controller
         return $bookDecreaseAction->handle($response);
     }
 
-    public function borrow(Book $book, BookBorrowAction $bookBorrowAction)
+    public function borrow(int $id, BookBorrowAction $bookBorrowAction)
     {
         $this->authorize('borrow',Book::class);
 
-        $response = $this->bookService->borrow($book);
+        $response = $this->bookService->borrow($id);
 
         return $bookBorrowAction->handle($response);
     }

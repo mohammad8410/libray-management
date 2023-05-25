@@ -113,25 +113,32 @@ class BookService
 
                 return $book;
             }
+
             throw new NotAcceptableHttpException();
         }
+
         throw new NotFoundHttpException();
     }
 
-    public function borrow(Book $book): Book
+    public function borrow(int $id): Book
     {
-        $borrowedBookCount = BookUser::query()->where('book_id', '=', $book->id)->count();
-        $existedBookCount  = $book->number - $borrowedBookCount;
+        $book = Book::query()->find($id);
+        if($book !== null)
+        {
+            $borrowedBookCount = BookUser::query()->where('book_id', '=', $book->id)->count();
+            $existedBookCount  = $book->number - $borrowedBookCount;
 
-        if ($existedBookCount > 0) {
-            BookUser::create([
-                'user_id' => Auth::user()->id,
-                'book_id' => $book->id,
-            ]);
-            return $book;
+            if ($existedBookCount > 0) {
+                BookUser::create([
+                    'user_id' => Auth::user()->id,
+                    'book_id' => $book->id,
+                ]);
+                return $book;
+            }
+
+            throw new NotAcceptableHttpException();
         }
-
-        throw new NotAcceptableHttpException();
+        throw new NotFoundHttpException();
     }
 
     public function returning(Book $book): Book
