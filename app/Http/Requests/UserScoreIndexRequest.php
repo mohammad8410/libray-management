@@ -9,7 +9,9 @@ class UserScoreIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sort' => 'boolean|nullable',
+            'sort'    => 'boolean|nullable',
+            'perPage' => 'int',
+            'page'    => 'int',
         ];
     }
 }
