@@ -9,12 +9,8 @@ use Illuminate\Http\JsonResponse;
 
 class UserScoreUpdateAction
 {
-    public function handle(UserScoreUpdateRequest $request,UserScore $userScore): JsonResponse
+    public function handle(UserScore $userScore): JsonResponse
     {
-        $userScore->update([
-            'score' => $request->get('newScore'),
-        ]);
-
         return new JsonResponse(new UserScoreResponse($userScore));
     }
 

@@ -6,6 +6,7 @@ use App\Actions\UserScore\UserScoreIndexAction;
 use App\Actions\UserScore\UserScoreShowAction;
 use App\Actions\UserScore\UserScoreUpdateAction;
 use App\DataTransferObjects\UserScoreIndexRequestDto;
+use App\DataTransferObjects\UserScoreUpdateRequestDto;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserScoreIndexRequest;
 use App\Http\Requests\UserScoreUpdateRequest;
@@ -47,11 +48,20 @@ class UserScoreController extends Controller
         return $userScoreShowAction->handle($response);
     }
 
-    public function update(UserScoreUpdateRequest $request, UserScore $userScore, UserScoreUpdateAction $userScoreUpdateAction)
+    public function update(UserScoreUpdateRequest $request, int $userScore, UserScoreUpdateAction $userScoreUpdateAction)
     {
         $this->authorize('update',UserScore::class);
 
-        return $userScoreUpdateAction->handle($request,$userScore);
+        try
+        {
+            $response = $this->service->update(UserScoreUpdateRequestDto::fromRequest($request,$userScore));
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $userScoreUpdateAction->handle($response);
     }
 
 

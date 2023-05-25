@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\DataTransferObjects\UserScoreIndexRequestDto;
+use App\DataTransferObjects\UserScoreUpdateRequestDto;
 use App\Exceptions\NotFoundException;
 use App\Models\UserScore;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -38,6 +39,21 @@ class UserScoreService
 
         if ($userScore !== null)
         {
+            return $userScore;
+        }
+
+        throw new NotFoundException();
+    }
+
+    public function update(UserScoreUpdateRequestDto $dto): UserScore
+    {
+        $userScore = UserScore::query()->find($dto->id);
+        if ($userScore !== null)
+        {
+            $userScore->update([
+                'score' => $dto->newScore,
+            ]);
+
             return $userScore;
         }
 
