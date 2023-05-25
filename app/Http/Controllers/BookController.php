@@ -103,11 +103,11 @@ class BookController extends Controller
         return $bookBorrowAction->handle($response);
     }
 
-    public function returning(Book $book, BookReturnAction $bookReturnAction)
+    public function returning(int $id, BookReturnAction $bookReturnAction)
     {
         $this->authorize('returning',Book::class);
 
-        $response = $this->bookService->returning($book);
+        $response = $this->bookService->returning($id);
 
         return $bookReturnAction->handle($response);
     }

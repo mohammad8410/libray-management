@@ -27,7 +27,7 @@ class BookReturnTest extends TestCase
         BookUser::factory()->withUser($user)->withBook($book)->create();
 
         $response = $this->actingAs($user)->post(route('book.return',[
-            'book' => 1
+            'id' => 1
         ]));
 
         $response->assertOk();
@@ -61,7 +61,7 @@ class BookReturnTest extends TestCase
         $book = Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.return',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertStatus(406);
@@ -73,7 +73,7 @@ class BookReturnTest extends TestCase
     public function test_unauthenticated_user_can_not_return_a_book()
     {
         $response = $this->post(route('book.return',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $this->assertGuest();
@@ -88,7 +88,7 @@ class BookReturnTest extends TestCase
         $book = Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.return',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
         $response->assertForbidden();
@@ -103,7 +103,7 @@ class BookReturnTest extends TestCase
         $user->givePermissionTo('return a book');
 
         $response = $this->actingAs($user)->post(route('book.return',[
-            'book' => 1,
+            'id' => 1,
         ]));
 
 

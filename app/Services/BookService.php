@@ -141,17 +141,24 @@ class BookService
         throw new NotFoundHttpException();
     }
 
-    public function returning(Book $book): Book
+    public function returning(int $id): Book
     {
-        $borrowQuery    = BookUser::query()->where('user_id', '=', Auth::user()->id)
-            ->where('book_id', '=', $book->id);
-        $userHasTheBook = $borrowQuery->exists();
+        $book = Book::query()->find($id);
+        if ($book !== null)
+        {
+            $borrowQuery    = BookUser::query()->where('user_id', '=', Auth::user()->id)
+                ->where('book_id', '=', $book->id);
+            $userHasTheBook = $borrowQuery->exists();
 
-        if ($userHasTheBook) {
-            $borrowQuery->delete();
-            return $book;
+            if ($userHasTheBook) {
+                $borrowQuery->delete();
+                return $book;
+            }
+
+            throw new NotAcceptableHttpException();
         }
-        throw new NotAcceptableHttpException();
+
+        throw new NotFoundHttpException();
     }
 
 
