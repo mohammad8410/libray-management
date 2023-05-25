@@ -90,11 +90,17 @@ class BookService
         throw new NotFoundHttpException();
     }
 
-    public function increaseStock(Book $book, int $incCount): Book
+    public function increaseStock(int $id, int $incCount): Book
     {
-        $book->increment('number', $incCount);
+        $book = Book::query()->find($id);
+        if($book !== null)
+        {
+            $book->increment('number', $incCount);
 
-        return $book;
+            return $book;
+        }
+
+        throw new NotFoundHttpException();
     }
 
     public function decreaseStock(Book $book, int $decCount): Book

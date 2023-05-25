@@ -76,11 +76,11 @@ class BookController extends Controller
         return $bookDeleteAction->handle($response);
     }
 
-    public function increase(Book $book, int $incCount, BookIncreaseAction $bookIncreaseAction)
+    public function increase(int $id, int $incCount, BookIncreaseAction $bookIncreaseAction)
     {
         $this->authorize('increase',Book::class);
 
-        $response = $this->bookService->increaseStock($book,$incCount);
+        $response = $this->bookService->increaseStock($id,$incCount);
 
         return $bookIncreaseAction->handle($response);
     }

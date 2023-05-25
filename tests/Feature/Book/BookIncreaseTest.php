@@ -28,7 +28,7 @@ class BookIncreaseTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->post(route('book.increase',[
-            'book' => 1,
+            'id' => 1,
             'incCount' => $incCount,
         ]));
 
@@ -62,7 +62,7 @@ class BookIncreaseTest extends TestCase
         $book = Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.increase',[
-            'book' => 1,
+            'id' => 1,
             'incCount' => 5,
         ]));
 
@@ -77,7 +77,7 @@ class BookIncreaseTest extends TestCase
         Book::factory()->create();
 
         $response = $this->post(route('book.increase',[
-            'book' => 1,
+            'id' => 1,
             'incCount' => 5,
         ]));
 
@@ -93,7 +93,7 @@ class BookIncreaseTest extends TestCase
         $user->givePermissionTo('increase book count');
 
         $response = $this->actingAs($user)->post(route('book.increase',[
-            'book' => 1,
+            'id' => 1,
             'incCount' => 5,
         ]));
 
