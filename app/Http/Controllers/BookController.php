@@ -71,7 +71,14 @@ class BookController extends Controller
     {
         $this->authorize('show', Book::class);
 
-        $response = $this->bookService->show($id);
+        try
+        {
+            $response = $this->bookService->show($id);
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
 
         return $bookShowAction->handle($response);
     }

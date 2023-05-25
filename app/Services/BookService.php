@@ -75,7 +75,7 @@ class BookService
             return $book;
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundException();
     }
 
     public function delete(int $id): Book
