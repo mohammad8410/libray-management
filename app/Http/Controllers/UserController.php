@@ -6,6 +6,7 @@ use App\Actions\User\UserDeleteAction;
 use App\Actions\User\UserIndexAction;
 use App\Actions\User\UserUpdateAction;
 use App\DataTransferObjects\UserIndexRequestDto;
+use App\DataTransferObjects\UserUpdateRequestDto;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserIndexRequest;
 use App\Http\Requests\UserUpdateRequest;
@@ -42,7 +43,16 @@ class UserController extends Controller
     {
         $this->authorize('update', User::class);
 
-        return $userUpdateAction->handle($request);
+        try
+        {
+            $response = $this->userService->update(UserUpdateRequestDto::fromRequest(Auth::user()->id,$request));
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $userUpdateAction->handle($response);
     }
 
     public function delete(UserDeleteAction $userDeleteAction)
