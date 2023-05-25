@@ -11,8 +11,6 @@ use App\Models\Book;
 use App\Models\BookUser;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookService
 {
