@@ -67,11 +67,11 @@ class BookController extends Controller
         return $bookShowAction->handle($response);
     }
 
-    public function delete(Book $book, BookDeleteAction $bookDeleteAction)
+    public function delete(int $id, BookDeleteAction $bookDeleteAction)
     {
         $this->authorize('delete', Book::class);
 
-        $response = $this->bookService->delete($book);
+        $response = $this->bookService->delete($id);
 
         return $bookDeleteAction->handle($response);
     }

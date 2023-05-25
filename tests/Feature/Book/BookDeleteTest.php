@@ -24,7 +24,9 @@ class BookDeleteTest extends TestCase
         $user->givePermissionTo('delete a book');
         $book = Book::factory()->create();
 
-        $response = $this->actingAs($user)->delete(route('book.delete',['book' => 1]));
+        $response = $this->actingAs($user)->delete(route('book.delete',[
+            'id' => 1
+        ]));
 
         $response->assertOk();
         $this->assertSoftDeleted($book);
@@ -52,7 +54,9 @@ class BookDeleteTest extends TestCase
     {
         Book::factory()->create();
 
-        $response = $this->delete(route('book.delete',['book' => 1]));
+        $response = $this->delete(route('book.delete',[
+            'id' => 1
+        ]));
 
         $this->assertGuest();
         $response->assertJson([
@@ -65,7 +69,9 @@ class BookDeleteTest extends TestCase
         $user = User::factory()->create();
         Book::factory()->create();
 
-        $response = $this->actingAs($user)->delete(route('book.delete',['book' => 1]));
+        $response = $this->actingAs($user)->delete(route('book.delete',[
+            'id' => 1
+        ]));
 
         $response->assertForbidden();
         $response->assertJson([
@@ -78,7 +84,9 @@ class BookDeleteTest extends TestCase
         $user = User::factory()->create();
         $user->givePermissionTo('delete a book');
 
-        $response = $this->actingAs($user)->delete(route('book.delete',['book' => 1]));
+        $response = $this->actingAs($user)->delete(route('book.delete',[
+            'id' => 1
+        ]));
 
         $response->assertNotFound();
         $response->assertJson([

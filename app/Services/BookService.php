@@ -78,11 +78,16 @@ class BookService
         throw new NotFoundHttpException();
     }
 
-    public function delete(Book $book): Book
+    public function delete(int $id): Book
     {
-        $book->delete();
+        $book = Book::query()->find($id);
+        if($book !== null)
+        {
+            $book->delete();
+            return $book;
+        }
 
-        return $book;
+        throw new NotFoundHttpException();
     }
 
     public function increaseStock(Book $book, int $incCount): Book
