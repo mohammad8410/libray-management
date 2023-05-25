@@ -103,14 +103,19 @@ class BookService
         throw new NotFoundHttpException();
     }
 
-    public function decreaseStock(Book $book, int $decCount): Book
+    public function decreaseStock(int $id, int $decCount): Book
     {
-        if ($decCount < $book->number) {
-            $book->decrement('number', $decCount);
+        $book = Book::query()->find($id);
+        if($book !== null)
+        {
+            if ($decCount < $book->number) {
+                $book->decrement('number', $decCount);
 
-            return $book;
+                return $book;
+            }
+            throw new NotAcceptableHttpException();
         }
-        throw new NotAcceptableHttpException();
+        throw new NotFoundHttpException();
     }
 
     public function borrow(Book $book): Book

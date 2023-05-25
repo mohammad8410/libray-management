@@ -28,7 +28,7 @@ class BookDecreaseTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->post(route('book.decrease',[
-            'book' => 1,
+            'id' => 1,
             'decCount' => $decCount,
         ]));
 
@@ -61,7 +61,7 @@ class BookDecreaseTest extends TestCase
         $book = Book::factory()->create();
 
         $response = $this->actingAs($user)->post(route('book.decrease',[
-            'book' => 1,
+            'id' => 1,
             'decCount' => 1,
         ]));
 
@@ -76,7 +76,7 @@ class BookDecreaseTest extends TestCase
         Book::factory()->create();
 
         $response = $this->post(route('book.decrease',[
-            'book' => 1,
+            'id' => 1,
             'decCount' => 1,
         ]));
 
@@ -92,7 +92,7 @@ class BookDecreaseTest extends TestCase
         $user->givePermissionTo('decrease book count');
 
         $response = $this->actingAs($user)->post(route('book.decrease',[
-            'book' => 1,
+            'id' => 1,
             'decCount' => 1,
         ]));
 
@@ -111,7 +111,7 @@ class BookDecreaseTest extends TestCase
         ]);
 
         $response = $this->actingAs($user)->post(route('book.decrease',[
-            'book' => 1,
+            'id' => 1,
             'decCount' => 2,
         ]));
 

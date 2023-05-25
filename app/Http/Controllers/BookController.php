@@ -85,11 +85,11 @@ class BookController extends Controller
         return $bookIncreaseAction->handle($response);
     }
 
-    public function decrease(Book $book, int $decCount, BookDecreaseAction $bookDecreaseAction)
+    public function decrease(int $id, int $decCount, BookDecreaseAction $bookDecreaseAction)
     {
         $this->authorize('decrease',Book::class);
 
-        $response = $this->bookService->decreaseStock($book,$decCount);
+        $response = $this->bookService->decreaseStock($id,$decCount);
 
         return $bookDecreaseAction->handle($response);
     }
