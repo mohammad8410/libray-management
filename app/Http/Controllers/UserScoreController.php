@@ -6,10 +6,12 @@ use App\Actions\UserScore\UserScoreIndexAction;
 use App\Actions\UserScore\UserScoreShowAction;
 use App\Actions\UserScore\UserScoreUpdateAction;
 use App\DataTransferObjects\UserScoreIndexRequestDto;
+use App\Exceptions\NotFoundException;
 use App\Http\Requests\UserScoreIndexRequest;
 use App\Http\Requests\UserScoreUpdateRequest;
 use App\Models\UserScore;
 use App\Services\UserScoreService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserScoreController extends Controller
 {
@@ -33,7 +35,16 @@ class UserScoreController extends Controller
     {
         $this->authorize('show',$userScore);
 
-        return $userScoreShowAction->handle($userScore);
+        try
+        {
+            $response = $this->service->show($userScore->id);
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $userScoreShowAction->handle($response);
     }
 
     public function update(UserScoreUpdateRequest $request, UserScore $userScore, UserScoreUpdateAction $userScoreUpdateAction)

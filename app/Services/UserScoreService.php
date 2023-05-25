@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\DataTransferObjects\UserScoreIndexRequestDto;
+use App\Exceptions\NotFoundException;
 use App\Models\UserScore;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -29,5 +30,17 @@ class UserScoreService
         }
 
         return $userScoreQuery->paginate(perPage: $perPage, page: $page);
+    }
+
+    public function show(int $id): UserScore
+    {
+        $userScore =  UserScore::query()->find($id);
+
+        if ($userScore !== null)
+        {
+            return $userScore;
+        }
+
+        throw new NotFoundException();
     }
 }
