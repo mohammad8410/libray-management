@@ -15,6 +15,7 @@ use App\Actions\Book\BookShowAction;
 use App\Actions\Book\BookUpdateAction;
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookUpdateRequestDto;
+use App\Exceptions\NotAcceptableException;
 use App\Exceptions\NotFoundException;
 use App\Http\Requests\BookCreateRequest;
 use App\Http\Requests\BookIndexRequest;
@@ -22,6 +23,7 @@ use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Services\BookService;
 use App\DataTransferObjects\BookIndexRequestDto;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BookController extends Controller
@@ -119,7 +121,18 @@ class BookController extends Controller
     {
         $this->authorize('decrease',Book::class);
 
-        $response = $this->bookService->decreaseStock($id,$decCount);
+        try
+        {
+            $response = $this->bookService->decreaseStock($id,$decCount);
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+        catch(NotAcceptableException $e)
+        {
+            throw new NotAcceptableHttpException();
+        }
 
         return $bookDecreaseAction->handle($response);
     }

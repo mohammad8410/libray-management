@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DataTransferObjects\BookCreateRequestDto;
 use App\DataTransferObjects\BookIndexRequestDto;
 use App\DataTransferObjects\BookUpdateRequestDto;
+use App\Exceptions\NotAcceptableException;
 use App\Exceptions\NotFoundException;
 use App\Models\Book;
 use App\Models\BookUser;
@@ -114,10 +115,10 @@ class BookService
                 return $book;
             }
 
-            throw new NotAcceptableHttpException();
+            throw new NotAcceptableException();
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundException();
     }
 
     public function borrow(int $id): Book
