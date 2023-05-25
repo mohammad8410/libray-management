@@ -42,12 +42,12 @@ class UserIndexTest extends TestCase
 
     public function test_unauthorized_user_can_not_see_other_users_info()
     {
-        $user1 = User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'moz',
         ]);
         User::factory()->create();
 
-        $response = $this->actingAs($user1)->get(route('user.index',[
+        $response = $this->actingAs($user)->get(route('user.index',[
             'id' => 2,
         ]));
 
