@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
-    public UserService $userService;
+    protected UserService $userService;
     public function __construct()
     {
         $this->userService = new UserService();
