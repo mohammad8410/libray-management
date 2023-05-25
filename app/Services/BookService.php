@@ -156,10 +156,10 @@ class BookService
                 return $book;
             }
 
-            throw new NotAcceptableHttpException();
+            throw new NotAcceptableException();
         }
 
-        throw new NotFoundHttpException();
+        throw new NotFoundException();
     }
 
 

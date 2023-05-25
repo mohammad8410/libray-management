@@ -161,7 +161,18 @@ class BookController extends Controller
     {
         $this->authorize('returning',Book::class);
 
-        $response = $this->bookService->returning($id);
+        try
+        {
+            $response = $this->bookService->returning($id);
+        }
+        catch (NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
+        catch (NotAcceptableException $e)
+        {
+            throw new NotAcceptableHttpException();
+        }
 
         return $bookReturnAction->handle($response);
     }
