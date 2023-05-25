@@ -87,7 +87,14 @@ class BookController extends Controller
     {
         $this->authorize('delete', Book::class);
 
-        $response = $this->bookService->delete($id);
+        try
+        {
+            $response = $this->bookService->delete($id);
+        }
+        catch (NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
 
         return $bookDeleteAction->handle($response);
     }
