@@ -10,6 +10,12 @@ class BookUser extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $casts = [
+        'created_at' => 'timestamp',
+        'updated_at' => 'timestamp',
+        'deleted_at' => 'timestamp',
+    ];
+
     protected $fillable = [
         'user_id',
         'book_id',
