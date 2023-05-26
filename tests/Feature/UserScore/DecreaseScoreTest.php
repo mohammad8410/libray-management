@@ -47,4 +47,29 @@ class DecreaseScoreTest extends TestCase
             'score' => -2,
         ]);
     }
+
+    public function test_score_decrease_for_unexpired_borrows()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('view own score');
+        $book = Book::factory()->create([
+            'maximumTime' => 7*24*60*60,
+        ]);
+        BookUser::factory()->withUser($user)->withBook($book)->create([
+            'created_at' => Carbon::yesterday(),
+        ]);
+
+        DecreaseScoreForEveryExpiredDay::dispatch();
+        $this->assertDatabaseMissing(UserScore::class,[
+            'score' => -1,
+        ]);
+        $response = $this->actingAs($user)->get(route('user-score.show',[
+            'user' => 1,
+        ]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'score' => 0,
+        ]);
+    }
 }
