@@ -23,11 +23,12 @@ class UserScoreIndexTest extends TestCase
         $expectedCount = config('pagination.default_page_size');
         $user = User::factory()->create();
         $user->givePermissionTo('view any score');
-        UserScore::factory()->withUser($user)->create();
-        UserScore::factory($expectedCount)->create();
+        UserScore::factory($expectedCount)->withUser($user)->create();
+        UserScore::factory()->create();
 
 
         $response = $this->actingAs($user)->get(route('user-scores.index',[
+            'id' => 1,
             'sort' => 1, //asc
             'per_page' => $expectedCount,
             'page' => 1,
@@ -46,6 +47,7 @@ class UserScoreIndexTest extends TestCase
                     [
                         'score',
                         'user_id',
+                        'description',
                     ]
                 ],
                 'meta' => [
@@ -83,6 +85,24 @@ class UserScoreIndexTest extends TestCase
         $this->assertGuest();
         $response->assertJson([
             'message' => 'unauthenticated user.',
+        ]);
+    }
+
+    public function test_resource_not_found_for_user_score_indexing()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('view any score');
+
+        $response = $this->actingAs($user)->get(route('user-scores.index',[
+            'id' => 2,
+            'sort' => 1,
+            'per_page' => 1,
+            'page' => 1,
+        ]));
+
+        $response->assertNotFound();
+        $response->assertJson([
+            'message' => 'resource not found.',
         ]);
     }
 

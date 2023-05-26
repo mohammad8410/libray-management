@@ -27,7 +27,14 @@ class UserScoreController extends Controller
     {
         $this->authorize('index',UserScore::class);
 
-        $response = $this->service->index(UserScoreIndexRequestDto::fromRequest($request));
+        try
+        {
+            $response = $this->service->index(UserScoreIndexRequestDto::fromRequest($request));
+        }
+        catch(NotFoundException $e)
+        {
+            throw new NotFoundHttpException();
+        }
 
         return $userScoreIndexAction->handle($response);
     }

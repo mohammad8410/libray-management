@@ -14,7 +14,8 @@ class UserScoreFactory extends Factory
     {
         return [
             'user_id' => fn() => User::factory()->create()->id,
-            'score'   => $this->faker->numberBetween(0,10),
+            'score'   => $this->faker->numberBetween(-2,2),
+            'description' => $this->faker->name,
         ];
     }
 

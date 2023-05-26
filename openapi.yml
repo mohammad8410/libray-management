@@ -443,6 +443,12 @@ paths:
       description: list of user scores(only for admins)
       parameters:
         - in: query
+          name: id
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - in: query
           name: sort
           required: false
           schema:
@@ -462,7 +468,7 @@ paths:
             nullable: false
       responses:
         200:
-          description: show all user scores
+          description: show user score history
           content:
             application/json:
               schema:
@@ -477,6 +483,8 @@ paths:
           $ref: "#/components/responses/Unauthenticated"
         403:
           $ref: "#/components/responses/Unauthorized"
+        404:
+          $ref: "#/components/responses/NotFound"
 
   /user-scores/{userScore}:
     get:
@@ -530,54 +538,6 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         404:
           $ref: "#/components/responses/NotFound"
-
-#  /userscore/{id}/inc:
-#    post:
-#      tags:
-#        - UserScore
-#      parameters:
-#        - in: query
-#          name: id
-#          required: true
-#          schema:
-#            type: integer
-#            nullable: false
-#      responses:
-#        200:
-#          description: user score increased successfully.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/UserScoreResponse"
-#        403:
-#          $ref: "#/components/responses/Unauthorized"
-#        404:
-#          $ref: "#/components/responses/NotFound"
-#
-#  /userscore/{id}/dec:
-#    post:
-#      tags:
-#        - UserScore
-#      parameters:
-#        - in: query
-#          name: id
-#          required: true
-#          schema:
-#            type: integer
-#            nullable: false
-#      responses:
-#        200:
-#          description: user score decreased successfully.
-#          content:
-#            application/json:
-#              schema:
-#                $ref: "#/components/schemas/UserScoreResponse"
-#        403:
-#          $ref: "#/components/responses/Unauthorized"
-#        404:
-#          $ref: "#/components/responses/NotFound"
-#        406:
-#          $ref: "#/components/responses/NotAcceptable"
 
 
 
@@ -856,6 +816,9 @@ components:
         user_id:
           type: integer
           nullable: false
+        description:
+          type: string
+          nullable: true
     UserUpdateRequestBody:
       type: object
       properties:

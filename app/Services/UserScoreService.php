@@ -8,12 +8,19 @@ use App\DataTransferObjects\UserScoreUpdateRequestDto;
 use App\Exceptions\NotFoundException;
 use App\Models\UserScore;
 use Illuminate\Pagination\LengthAwarePaginator;
+use function PHPUnit\Framework\isEmpty;
 
 class UserScoreService
 {
     public function index(UserScoreIndexRequestDto $dto): LengthAwarePaginator
     {
-        $userScoreQuery = UserScore::query();
+        $userScoreQuery = UserScore::query()->where('user_id','=',$dto->id);
+
+        if (isEmpty($userScoreQuery->get()))
+        {
+            throw new NotFoundException();
+        }
+
         $queryParam     = $dto->sort;
         $perPage        = $dto->perPage;
         $page           = $dto->page;
@@ -22,11 +29,11 @@ class UserScoreService
         {
             if ($queryParam)
             {
-                $userScoreQuery->orderBy('score', 'asc');
+                $userScoreQuery->orderBy('created_at', 'asc');
             }
             else
             {
-                $userScoreQuery->orderBy('score', 'desc');
+                $userScoreQuery->orderBy('created_at', 'desc');
             }
         }
 
