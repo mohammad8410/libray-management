@@ -7,17 +7,19 @@ use App\Http\Requests\UserScoreUpdateRequest;
 class UserScoreUpdateRequestDto
 {
     public function __construct(
-        public readonly int $newScore,
-        public readonly int $id,
+        public readonly ?string $description,
+        public readonly int $score,
+        public readonly int $userId,
     )
     {
     }
 
-    public static function fromRequest(UserScoreUpdateRequest $request,int $id): self
+    public static function fromRequest(UserScoreUpdateRequest $request,int $userId): self
     {
         return new self(
-            $request->validated('newScore'),
-            $id,
+            $request->validated('description'),
+            $request->validated('score'),
+            $userId,
         );
     }
 }

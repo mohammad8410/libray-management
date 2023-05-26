@@ -70,17 +70,20 @@ Route::delete('/users',[UserController::class,'delete'])
     ->middleware('auth')
     ->name('user.delete');
 
+Route::get('/users/{user}/scores',[UserController::class,'showScore'])
+    ->middleware('auth')
+    ->name('user-score.show');
+
+Route::put('/users/{user}/score/update',[UserController::class,'updateScore'])
+    ->middleware('auth')
+    ->name('user-score.update');
+
+
 
 
 Route::get('/user-scores',[UserScoreController::class,'index'])
     ->middleware('auth')
     ->name('user-scores.index');
 
-Route::get('/user-scores/{userScore}',[UserScoreController::class,'show'])
-    ->middleware('auth')
-    ->name('user-score.show');
 
-Route::put('/user-scores/{userScore}',[UserScoreController::class,'update'])
-    ->middleware('auth')
-    ->name('user-score.update');
 

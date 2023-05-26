@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\UserScore;
+namespace Tests\Feature\User;
 
 use App\Models\User;
 use App\Models\UserScore;
@@ -20,33 +20,50 @@ class UserScoreShowTest extends TestCase
 
     public function test_show_user_score()
     {
+        $expectedScore = 5;
         $user = User::factory()->create();
         $user->givePermissionTo('view own score');
-        $score = UserScore::factory(5)->withUser($user)->create([
+        UserScore::factory($expectedScore)->withUser($user)->create([
             'score' => 1,
         ]);
 
         $response = $this->actingAs($user)->get(route('user-score.show',[
-            'id' => 1,
+            'user' => 1,
         ]));
 
         $response->assertOk();
-        $response->assertSee(5);
         $response->assertJson([
-            'score' => $score->score,
-            'user_id' => $user->id,
+            'score' => $expectedScore,
         ]);
     }
 
-    public function test_unauthorized_access_to_user_score()
+    public function test_super_admin_can_view_any_score()
+    {
+        $expectedScore = 5;
+        $admin = User::factory()->create();
+        $admin->givePermissionTo('view any score');
+        $user  = User::factory()->create();
+        $userScore = UserScore::factory($expectedScore)->withUser($user)->create([
+            'score' => 1,
+        ]);
+
+        $response = $this->actingAs($admin)->get(route('user-score.show',[
+            'user' => 2,
+        ]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'score' => $expectedScore,
+        ]);
+    }
+
+    public function test_unauthorized_user_can_not_view_scores()
     {
         $user = User::factory()->create();
-        $user->givePermissionTo('view own score');
-        UserScore::factory()->withUser($user)->create();
-        UserScore::factory()->create();
+        User::factory()->create();
 
         $response = $this->actingAs($user)->get(route('user-score.show',[
-            'userScore' => 2,
+            'user' => 2,
         ]));
 
         $response->assertForbidden();
@@ -55,25 +72,25 @@ class UserScoreShowTest extends TestCase
         ]);
     }
 
-    public function test_unauthenticated_user_can_not_see_score()
+    public function test_unauthenticated_user_can_not_view_user_score()
     {
         $response = $this->get(route('user-score.show',[
-            'userScore' => 1,
+            'user' => 1
         ]));
 
         $this->assertGuest();
         $response->assertJson([
-            'message' => 'unauthenticated user.'
+            'message' => 'unauthenticated user.',
         ]);
     }
 
-    public function test_resource_not_found_for_show_score()
+    public function test_resource_not_found_for_show_user_score()
     {
         $user = User::factory()->create();
         $user->givePermissionTo('view any score');
 
         $response = $this->actingAs($user)->get(route('user-score.show',[
-            'userScore' => 2,
+            'user' => 2,
         ]));
 
         $response->assertNotFound();

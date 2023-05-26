@@ -12,6 +12,7 @@ class UserScore extends Model
 
     protected $fillable = [
         'score',
+        'user_id',
     ];
     public function user(): BelongsTo
     {

@@ -9,7 +9,8 @@ class UserScoreUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'newScore' => 'integer|required',
+            'score' => 'integer|required',
+            'description' => 'string|nullable',
         ];
     }
 }

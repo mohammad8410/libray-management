@@ -23,4 +23,16 @@ class UserPolicy
     {
         return $user->can('delete own account');
     }
+
+    public function showScore(User $user, User $requestedUser): bool
+    {
+        return $user->can('view any score')
+            ||($user->can('view own score')
+            && $requestedUser->id == $user->id);
+    }
+
+    public function updateScore(User $user): bool
+    {
+        return $user->can('update user score');
+    }
 }

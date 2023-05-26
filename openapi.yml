@@ -436,6 +436,34 @@ paths:
         403:
           $ref: "#/components/responses/Unauthorized"
 
+  /users/{id}/score:
+    get:
+      tags:
+      - User
+      description: current score of the user
+      parameters:
+        - in: query
+          name: id
+          description: user id
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        200:
+          description: show user score.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserScoreResponse"
+        401:
+          $ref: "#/components/responses/Unauthenticated"
+        403:
+          $ref: "#/components/responses/Unauthorized"
+        404:
+          $ref: "#/components/responses/NotFound"
+
+
   /user-scores:
     get:
       tags:
@@ -486,35 +514,10 @@ paths:
         404:
           $ref: "#/components/responses/NotFound"
 
-  /user-scores/{userScore}:
-    get:
-      tags:
-        - UserScore
-      description: show user score
-      parameters:
-        - in: query
-          name: id
-          required: true
-          schema:
-            type: integer
-            nullable: false
-      responses:
-        200:
-          description: show user score.
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserScoreResponse"
-        401:
-          $ref: "#/components/responses/Unauthenticated"
-        403:
-          $ref: "#/components/responses/Unauthorized"
-        404:
-          $ref: "#/components/responses/NotFound"
-
+  /users/{id}/score/update:
     put:
       tags:
-        - UserScore
+        - User
       description: update user score(only for admins)
       parameters:
         - in: query
@@ -538,8 +541,6 @@ paths:
           $ref: "#/components/responses/Unauthorized"
         404:
           $ref: "#/components/responses/NotFound"
-
-
 
 
 components:
@@ -662,7 +663,7 @@ components:
     UpdateUserScoreRequestBody:
       type: object
       properties:
-        newScore:
+        score:
           type: integer
           nullable: false
     CreateBookRequestBody:
