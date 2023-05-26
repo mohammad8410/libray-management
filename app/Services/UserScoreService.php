@@ -16,7 +16,7 @@ class UserScoreService
     {
         $userScoreQuery = UserScore::query()->where('user_id','=',$dto->id);
 
-        if (isEmpty($userScoreQuery->get()))
+        if ($userScoreQuery->doesntExist())
         {
             throw new NotFoundException();
         }
@@ -40,11 +40,11 @@ class UserScoreService
         return $userScoreQuery->paginate(perPage: $perPage, page: $page);
     }
 
-    public function show(int $id): UserScore
+    public function show(int $userId): UserScore
     {
-        $userScore =  UserScore::query()->find($id);
+        $userScore =  UserScore::query()->where('user_id','=',$userId);
 
-        if ($userScore !== null)
+        if (!isEmpty($userScore->get()))
         {
             return $userScore;
         }
