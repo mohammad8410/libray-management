@@ -21,7 +21,6 @@ class DecreaseScoreTest extends TestCase
 
         $this->seed();
     }
-
     public function test_score_decrease_for_expired_borrows()
     {
         $user = User::factory()->create();
@@ -37,14 +36,39 @@ class DecreaseScoreTest extends TestCase
         $this->assertDatabaseHas(UserScore::class,[
             'score' => -1,
         ]);
-        DecreaseScoreForEveryExpiredDay::dispatch();
         $response = $this->actingAs($user)->get(route('user-score.show',[
-            'user' => 1
+            'user' => 1,
         ]));
 
         $response->assertOk();
         $response->assertJson([
-            'score' => -2,
+            'score' => -1,
+        ]);
+    }
+
+    public function test_score_will_not_decreased_for_a_user_twice_in_a_day()
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo('view own score');
+        $book = Book::factory()->create([
+            'maximumTime' => 7*24*60*60,
+        ]);
+        BookUser::factory()->withUser($user)->withBook($book)->create([
+            'created_at' => new Carbon('first day of last month'),
+        ]);
+
+        UserScore::factory()->withUser($user)->create([
+            'created_at' => new Carbon('today'),
+            'score' => -1,
+        ]);
+        DecreaseScoreForEveryExpiredDay::dispatch();
+        $response = $this->actingAs($user)->get(route('user-score.show',[
+            'user' => 1,
+        ]));
+
+        $response->assertOk();
+        $response->assertJson([
+            'score' => -1,
         ]);
     }
 
@@ -67,9 +91,6 @@ class DecreaseScoreTest extends TestCase
             'user' => 1,
         ]));
 
-        $response->assertOk();
-        $response->assertJson([
-            'score' => 0,
-        ]);
+        $response->assertNotFound();
     }
 }

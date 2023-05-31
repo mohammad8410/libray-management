@@ -35,14 +35,16 @@ class DecreaseScoreForEveryExpiredDay implements ShouldQueue
             $userBooksId = BookUser::query()->where('user_id','=',$user->user_id)->select('book_id')->get();
             $userBooksId->each(function ($book) use($user){
                 $userBook  = Book::query()->where('id','=',$book->book_id)->get();
-                $isExpired  = BookUser::query()->whereTime('created_at','<',now()->timestamp - $userBook[0]->maximumTime)
+                $isExpired  = BookUser::query()->whereDate('created_at','<',Carbon::parse(now()->timestamp-$userBook[0]->maximumTime))
                     ->where('book_id','=',$userBook[0]->id)
                     ->where('user_id','=',$user->user_id)->exists();
+
                 if ($isExpired)
                 {
                     $scoreDecreasedAlready =  UserScore::query()->where('user_id','=',$user->user_id)
-                                                                ->where('created_at','<',Carbon::yesterday())
+                                                                ->whereDate('created_at','>',Carbon::yesterday())
                                                                 ->where('score','<',0);
+
                     if ($scoreDecreasedAlready->doesntExist())
                     {
                         UserScore::create([
